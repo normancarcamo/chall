@@ -8,6 +8,7 @@
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/3.8.2/superagent.js"></script>
+    <script src="calendar.js"></script>
   </head>
   <body>
     <div id="root"></div>
@@ -82,7 +83,8 @@
                 year: `2008`,
                 month: `9`
               }
-            }
+            },
+            calendar: null
           };
 
           // Event handlers:
@@ -98,7 +100,12 @@
 
           try {
             const { body } = await superagent(state.api.url).query(state.api.query);
+            state.calendar = new Calendario(state.api.query.year);
             console.log('BODY:', body);
+            console.log('Calendar', state.calendar);
+            if (body.holidays.length) {
+              console.log(`The month has: ${body.holidays.length} holidays`);
+            }
           } catch ({ message }) {
             console.log('ERROR HERE! ->', message);
           }
