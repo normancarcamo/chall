@@ -54,14 +54,6 @@ Calendario.prototype.getMonthsFrom = function(year = this.year) {
     let nextDays = getLastDays(index).length; // used to know how much days have to be null
     let daysTotal = monthdays(index) + previousDays + nextDays;
 
-    console.log('---------------------------------------------------------------');
-    console.log('Index:', index);
-    console.log('First day:', f);
-    console.log('Last day:', l);
-    console.log('Previous days of a month:', previousDays);
-    console.log('Next days of a month:', nextDays);
-    console.log('Total days of a month: (+prev+next)', daysTotal);
-
     let dayCounter = -1; // Used to know what day of the week are we.
     let days = []; // Used to hold the days of a week.
 
@@ -69,10 +61,8 @@ Calendario.prototype.getMonthsFrom = function(year = this.year) {
     for (let i = 0; i<daysTotal; i++) {
       if ((i % 7) === 0) {
         dayCounter = 0;
-        console.log('Last day of a week ->', dayCounter);
       } else {
         dayCounter++;
-        console.log('DOWN Day ->', dayCounter);
       }
       if (i < previousDays) {
         days.push(null); // previous days before the first day of the month, example: S -> null, M -> null, T -> null, W -> 1, T -> 2 ...
@@ -88,13 +78,19 @@ Calendario.prototype.getMonthsFrom = function(year = this.year) {
           days.push(null); // next days after the last day of the month, example: W -> 31, T -> null, F -> null, S -> null
         }
       }
-
-      console.log('previous days + weekdays:', days);
     }
 
-    target.push({ days: days });
+    const source = {
+      key: index, // key to know what month is, example: 1 = Jan...
+      previousDays,
+      nextDays,
+      padding: previousDays + nextDays, // If you want to know how many days between the days there are because you could rest this padding to the total of days.
+      days: days.filter(day => day && day), // added only the days valid, not the previous and next days.
+      weekdays: this.weekdays // Added to build the calendar using the abbr, example: S M T W T F S
+    }
 
-    console.log('--');
+    target.push(Object.assign(source, month));
+
     return target;
   }, []);
 }
