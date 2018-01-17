@@ -63,6 +63,20 @@ Calendario.prototype.getMonthsFrom = function(year = this.year) {
     console.log('Total days of a month: (+prev+next)', daysTotal);
     console.log('--');
 
+    let dayCounter = -1;
+
+    // On each month we will loop each day:
+    for (let i = 0; i<daysTotal; i++) {
+      if ((i % 7) === 0) {
+        dayCounter = 0;
+        console.log('Last day of a week ->', dayCounter);
+      } else {
+        dayCounter++;
+        console.log('DOWN Day ->', dayCounter);
+      }
+
+    }
+
     return target;
   }, []);
 }
