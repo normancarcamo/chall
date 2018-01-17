@@ -96,19 +96,25 @@
 
           state.filters = Object.assign({}, values);
 
-          console.log('State:', state.api);
+          if (/\-0/g.test(state.filters.startdate)) { // -0n
+            let date = state.filters.startdate.replace(/\-0/g, '-'); // 2017-01-01 -> 2017-1-1
+            state.filters.startdate = new Date(date);
+            state.api.query.country = state.filters.countrycode;
+            state.api.query.year    = state.filters.startdate.getFullYear();
+            state.api.query.month   = state.filters.startdate.getMonth() + 1;
+          }
 
           try {
             const { body } = await superagent(state.api.url).query(state.api.query);
             state.calendar = new Calendario(state.api.query.year);
-            console.log('BODY:', body);
-            console.log('Calendar', state.calendar);
             if (body.holidays.length) {
               console.log(`The month has: ${body.holidays.length} holidays`);
             }
           } catch ({ message }) {
             console.log('ERROR HERE! ->', message);
           }
+
+          console.log('State:', state);
 
           this.setState(state);
         }
