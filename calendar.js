@@ -26,3 +26,21 @@ function Calendario(year) {
   this.years = {};
   this.range = {};
 }
+
+Calendario.prototype.getFirstAndLastDayOfAMonth = function(m) {
+  let y = this.year;
+  let f = new Date(y, m, 1);
+  let l = new Date(y, m + 1, 0);
+  return { f, l };
+}
+
+Calendario.prototype.monthdays = function(m) {
+  let { f, l } = this.getFirstAndLastDayOfAMonth(m);
+  return (l.getDate() - f.getDate()) + 1
+}
+
+Calendario.prototype.getLastDays = function(m) {
+  let { l } = this.getFirstAndLastDayOfAMonth(m);
+  let lastDays = (this.weekdays.length - l.getDay())-1;
+  return Array(lastDays).fill(null); // array because later we will use it and it's better cause it also give us the length.
+}
