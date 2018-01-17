@@ -71,14 +71,29 @@
           super(props);
 
           // Initial state:
-          this.state = {};
+          this.state = {
+            filters: null
+          };
+
+          // Event handlers:
+          this.onSearch = this.onSearch.bind(this);
+        }
+
+        async onSearch(values) {
+          let state = this.state;
+
+          state.filters = Object.assign({}, values);
+
+          console.log('state.filters:', state.filters);
+
+          this.setState(state);
         }
 
         render() {
           return (
             <div className={'wrapper'}>
               <h1>Hello from react</h1>
-              <Inputs />
+              <Inputs onSearch={this.onSearch} />
             </div>
           );
         }
