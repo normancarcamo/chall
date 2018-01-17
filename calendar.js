@@ -62,7 +62,6 @@ Calendario.prototype.getMonthsFrom = function(year = this.year) {
     console.log('Next days of a month:', nextDays);
     console.log('Total days of a month: (+prev+next)', daysTotal);
 
-
     let dayCounter = -1; // Used to know what day of the week are we.
     let days = []; // Used to hold the days of a week.
 
@@ -76,10 +75,21 @@ Calendario.prototype.getMonthsFrom = function(year = this.year) {
         console.log('DOWN Day ->', dayCounter);
       }
       if (i < previousDays) {
-        days.push(null);
+        days.push(null); // previous days before the first day of the month, example: S -> null, M -> null, T -> null, W -> 1, T -> 2 ...
+      } else {
+        if ((days.length-previousDays) < l.getDate()) { // Days between previous and nextdays:
+          let key = ((i-previousDays)+1); // marks each day with 1, 2, 3, 4, 5, 6...
+          let source = { key };
+          if (key === 1) source.firstday = true; // added flag to know later which is the first day of a week
+          if (key === l.getDate()) source.lastday = true; // added flag to know later which is the last day of a week
+          let day = Object.assign(source, this.weekdays[dayCounter]); // { key, firstday, lastday, name: 'Sunday', abbr: 'S', weekend: true };
+          days.push(day);
+        } else {
+          days.push(null); // next days after the last day of the month, example: W -> 31, T -> null, F -> null, S -> null
+        }
       }
 
-      console.log('previous days:', days);
+      console.log('previous days + weekdays:', days);
     }
 
     target.push({ days: days });
