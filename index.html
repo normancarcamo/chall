@@ -14,6 +14,57 @@
       const { Component } = React;
       const { render } = ReactDOM;
 
+      class Inputs extends Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            startdate: null,
+            countrycode: null,
+            days: null
+          };
+          this.onChange = this.onChange.bind(this);
+          this.onClick = this.onClick.bind(this);
+        }
+
+        onClick(e) {
+          if (this.props.onSearch) {
+            this.props.onSearch(this.state)
+          } else {
+            console.log('Click!');
+          }
+        }
+
+        onChange({ target }) {
+          this.setState({ [target.name]: target.value });
+        }
+
+        render() {
+          return (
+            <div className={'inputs'}>
+              <input
+                type={'date'}
+                name={'startdate'}
+                onChange={this.onChange} />
+              <br />
+              <input
+                type={'text'}
+                name={'countrycode'}
+                placeholder={'Country Code'}
+                onChange={this.onChange} />
+              <br />
+              <input
+                type={'number'}
+                name={'days'}
+                min={1}
+                placeholder={'Days'}
+                onChange={this.onChange} />
+              <br />
+              <input type={'button'} name={'inputs'} value={'Filter'} onClick={this.onClick} />
+            </div>
+          );
+        }
+      }
+
       class App extends Component {
         constructor(props) {
           // Initial props:
@@ -27,6 +78,7 @@
           return (
             <div className={'wrapper'}>
               <h1>Hello from react</h1>
+              <Inputs />
             </div>
           );
         }
