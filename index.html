@@ -96,6 +96,13 @@
 
           console.log('State:', state.api);
 
+          try {
+            const { body } = await superagent(state.api.url).query(state.api.query);
+            console.log('BODY:', body);
+          } catch ({ message }) {
+            console.log('ERROR HERE! ->', message);
+          }
+
           this.setState(state);
         }
 
