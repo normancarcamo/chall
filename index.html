@@ -108,8 +108,7 @@
             const { body } = await superagent(state.api.url).query(state.api.query);
             state.calendar = new Calendario(state.api.query.year);
 
-            console.log('First & last day ---->', state.calendar.getFirstAndLastDayOfAMonth(state.api.query.month));
-            console.log('Get days of a month ---->', state.calendar.monthdays(state.api.query.month));
+            console.log('getMonthsFrom a year ---->', state.calendar.getMonthsFrom(state.api.query.year));
 
             if (body.holidays.length) {
               console.log(`The month has: ${body.holidays.length} holidays`);

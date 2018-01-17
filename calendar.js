@@ -27,20 +27,42 @@ function Calendario(year) {
   this.range = {};
 }
 
-Calendario.prototype.getFirstAndLastDayOfAMonth = function(m) {
-  let y = this.year;
-  let f = new Date(y, m, 1);
-  let l = new Date(y, m + 1, 0);
-  return { f, l };
-}
+Calendario.prototype.getMonthsFrom = function(year = this.year) {
+  let that = this;
 
-Calendario.prototype.monthdays = function(m) {
-  let { f, l } = this.getFirstAndLastDayOfAMonth(m);
-  return (l.getDate() - f.getDate()) + 1
-}
+  function getFirstAndLastDayOfAMonth(m) {
+    let y = year;
+    let f = new Date(y, m, 1);
+    let l = new Date(y, m + 1, 0);
+    return { f, l };
+  }
 
-Calendario.prototype.getLastDays = function(m) {
-  let { l } = this.getFirstAndLastDayOfAMonth(m);
-  let lastDays = (this.weekdays.length - l.getDay())-1;
-  return Array(lastDays).fill(null); // array because later we will use it and it's better cause it also give us the length.
+  function monthdays(m) {
+    let { f, l } = getFirstAndLastDayOfAMonth(m);
+    return (l.getDate() - f.getDate()) + 1
+  }
+
+  function getLastDays(m) {
+    let { l } = getFirstAndLastDayOfAMonth(m);
+    let lastDays = (that.weekdays.length - l.getDay())-1;
+    return Array(lastDays).fill(null);
+  }
+
+  return this.months.reduce((target, month, index) => {
+    let { f, l } = getFirstAndLastDayOfAMonth(index);
+    let previousDays = (f.getDay() - 0);      // used to know how much days have to be null
+    let nextDays = getLastDays(index).length; // used to know how much days have to be null
+    let daysTotal = monthdays(index) + previousDays + nextDays;
+
+    console.log('---------------------------------------------------------------');
+    console.log('Index:', index);
+    console.log('First day:', f);
+    console.log('Last day:', l);
+    console.log('Previous days of a month:', previousDays);
+    console.log('Next days of a month:', nextDays);
+    console.log('Total days of a month: (+prev+next)', daysTotal);
+    console.log('--');
+
+    return target;
+  }, []);
 }
