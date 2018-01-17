@@ -61,9 +61,10 @@ Calendario.prototype.getMonthsFrom = function(year = this.year) {
     console.log('Previous days of a month:', previousDays);
     console.log('Next days of a month:', nextDays);
     console.log('Total days of a month: (+prev+next)', daysTotal);
-    console.log('--');
 
-    let dayCounter = -1;
+
+    let dayCounter = -1; // Used to know what day of the week are we.
+    let days = []; // Used to hold the days of a week.
 
     // On each month we will loop each day:
     for (let i = 0; i<daysTotal; i++) {
@@ -74,9 +75,16 @@ Calendario.prototype.getMonthsFrom = function(year = this.year) {
         dayCounter++;
         console.log('DOWN Day ->', dayCounter);
       }
+      if (i < previousDays) {
+        days.push(null);
+      }
 
+      console.log('previous days:', days);
     }
 
+    target.push({ days: days });
+
+    console.log('--');
     return target;
   }, []);
 }
