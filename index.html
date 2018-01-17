@@ -73,7 +73,16 @@
 
           // Initial state:
           this.state = {
-            filters: null
+            filters: null,
+            api: {
+              url: `https://holidayapi.com/v1/holidays`,
+              query: {
+                key: `927457cd-2748-43a6-9991-a3c0925d3092`,
+                country: `US`,
+                year: `2008`,
+                month: `9`
+              }
+            }
           };
 
           // Event handlers:
@@ -85,7 +94,7 @@
 
           state.filters = Object.assign({}, values);
 
-          console.log('Testing the API:', superagent);
+          console.log('State:', state.api);
 
           this.setState(state);
         }
