@@ -48,6 +48,15 @@ Calendario.prototype.getMonthsFrom = function(year = this.year) {
     return Array(lastDays).fill(null);
   }
 
+  function filterDaysPerWeek(days) {
+    return days.reduce((target, day, index) => {
+      if ((index % 7) === 0) {
+        target.push(days.slice(index, index+7));
+      }
+      return target;
+    }, []);
+  }
+
   return this.months.reduce((target, month, index) => {
     let { f, l } = getFirstAndLastDayOfAMonth(index);
     let previousDays = (f.getDay() - 0);      // used to know how much days have to be null
@@ -86,7 +95,9 @@ Calendario.prototype.getMonthsFrom = function(year = this.year) {
       nextDays,
       padding: previousDays + nextDays, // If you want to know how many days between the days there are because you could rest this padding to the total of days.
       days: days.filter(day => day && day), // added only the days valid, not the previous and next days.
-      weekdays: this.weekdays // Added to build the calendar using the abbr, example: S M T W T F S
+      weeks: filterDaysPerWeek(days),
+      weekdays: this.weekdays, // Added to build the calendar using the abbr, example: S M T W T F S
+      year
     }
 
     target.push(Object.assign(source, month));
