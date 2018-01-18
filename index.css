@@ -1,3 +1,66 @@
-h1 {
-  color: orange;
+.wrapper {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+table {
+  border-collapse: collapse;
+}
+
+td, th {
+  width: 2rem;
+  height: 2rem;
+  text-align: center;
+}
+
+.calendar {
+  background-color: initial;
+}
+
+.yearWrapper {
+  background-color: initial;
+}
+
+.year {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.yearTitle {
+  color: dimgrey;
+}
+
+.month {
+  background-color: #cccccc;
+  display: block;
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+}
+
+.weekday {
+  background-color: #C7D7AB;
+}
+
+.weekend {
+  background-color: #FDFA57;
+}
+
+.daysOff {
+  background-color: #CCCCCC;
+}
+
+.daysAbbr {
+  background-color: #FEFDFE;
+}
+
+.holiday {
+  background-color: #F87F2E;
+}
+
+.month-name {
+  text-align: center;
+  background-color: #E7F3D2;
+}
+
+.error {
+  color: red;
 }

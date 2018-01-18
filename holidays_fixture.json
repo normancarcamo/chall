@@ -1,0 +1,120 @@
+[
+  {
+    "status": 200,
+    "holidays": [
+      { "name": "Last Day of Kwanzaa",         "date": "2012-01-01", "observed": "2012-01-01", "public": false },
+      { "name": "New Year's Day",              "date": "2012-01-01", "observed": "2012-01-02", "public": true },
+      { "name": "Epiphany",                    "date": "2012-01-06", "observed": "2012-01-06", "public": false },
+      { "name": "Orthodox Christmas",          "date": "2012-01-07", "observed": "2012-01-07", "public": false },
+      { "name": "Martin Luther King, Jr. Day", "date": "2012-01-16", "observed": "2012-01-16", "public": true }
+    ]
+  },
+  {
+    "status": 200,
+    "holidays": [
+      { "name": "Groundhog Day",                "date": "2012-02-02", "observed": "2012-02-02", "public": false },
+      { "name": "Valentine's Day",              "date": "2012-02-14", "observed": "2012-02-14", "public": false },
+      { "name": "George Washington's Birthday", "date": "2012-02-20", "observed": "2012-02-20", "public": true },
+      { "name": "Ash Wednesday",                "date": "2012-02-22", "observed": "2012-02-22", "public": false }
+    ]
+  },
+  {
+    "status": 200,
+    "holidays": [
+     { "name": "St. Patrick's Day", "date": "2012-03-17", "observed": "2012-03-17", "public": false }
+    ]
+  },
+  {
+    "status": 200,
+    "holidays": [
+      { "name": "April Fools' Day",   "date": "2012-04-01", "observed": "2012-04-01", "public": false },
+      { "name": "Palm Sunday",        "date": "2012-04-01", "observed": "2012-04-01", "public": false },
+      { "name": "Good Friday",        "date": "2012-04-06", "observed": "2012-04-06", "public": false },
+      { "name": "Easter",             "date": "2012-04-08", "observed": "2012-04-08", "public": false },
+      { "name": "Earth Day",          "date": "2012-04-22", "observed": "2012-04-22", "public": false },
+      { "name": "National Arbor Day", "date": "2012-04-27", "observed": "2012-04-27", "public": false }
+    ]
+  },
+  {
+    "status": 200,
+    "holidays": [
+      { "name": "May Day",       "date": "2012-05-01", "observed": "2012-05-01", "public": false},
+      { "name": "Star Wars Day", "date": "2012-05-04", "observed": "2012-05-04", "public": false},
+      { "name": "Cinco de Mayo", "date": "2012-05-05", "observed": "2012-05-05", "public": false},
+      { "name": "Mother's Day",  "date": "2012-05-13", "observed": "2012-05-13", "public": false},
+      { "name": "Memorial Day",  "date": "2012-05-28", "observed": "2012-05-28", "public": true}
+    ]
+  },
+  {
+    "status": 200,
+    "holidays": [
+      { "name":"Flag Day",         "date": "2012-06-14", "observed": "2012-06-14", "public": false },
+      { "name":"Father's Day",     "date": "2012-06-17", "observed": "2012-06-17", "public": false },
+      { "name":"Helen Keller Day", "date": "2012-06-27", "observed": "2012-06-27", "public": false }
+    ]
+  },
+  {
+    "status": 200,
+    "holidays": [
+      { "name": "Independence Day", "date": "2012-07-04", "observed": "2012-07-04", "public": true }
+    ]
+  },
+  {
+    "status": 200,
+    "holidays": [
+      { "name": "Women's Equality Day", "date": "2012-08-26", "observed": "2012-08-26", "public": false }
+    ]
+  },
+  {
+    "status": 200,
+    "holidays": [
+      { "name": "Labor Day",                  "date": "2012-09-03", "observed": "2012-09-03", "public": true },
+      { "name": "National Grandparent's Day", "date": "2012-09-09", "observed": "2012-09-09", "public": false },
+      { "name": "Patriot Day",                "date": "2012-09-11", "observed": "2012-09-11", "public": false },
+      { "name": "Citizenship Day",            "date": "2012-09-17", "observed": "2012-09-17", "public": false }
+    ]
+  },
+  {
+    "status": 200,
+    "holidays": [
+      { "name": "German-American Day", "date": "2012-10-06", "observed": "2012-10-06", "public": false },
+      { "name": "Columbus Day",        "date": "2012-10-08", "observed": "2012-10-08", "public": true },
+      { "name": "Leif Erikson Day",    "date": "2012-10-09", "observed": "2012-10-09", "public": false },
+      { "name": "Halloween",           "date": "2012-10-31", "observed": "2012-10-31", "public": false }
+    ]
+  },
+  {
+    "status": 200,
+    "holidays": [
+      { "name": "Election Day",          "date": "2012-11-06", "observed": "2012-11-06", "public": false },
+      { "name": "Presidential Election", "date": "2012-11-06", "observed": "2012-11-06", "public": false },
+      { "name": "Veterans Day",          "date": "2012-11-11", "observed": "2012-11-12", "public": true },
+      { "name": "Thanksgiving Day",      "date": "2012-11-22", "observed": "2012-11-22", "public": true },
+      { "name": "Black Friday",          "date": "2012-11-23", "observed": "2012-11-23", "public": false }
+    ]
+  },
+  {
+    "status": 200,
+    "holidays": [
+      { "name": "Pearl Harbor Remembrance Day",             "date": "2012-12-07", "observed": "2012-12-07", "public": false },
+      { "name": "Hanukkah",                                 "date": "2012-12-08", "observed": "2012-12-08", "public": false },
+      { "name": "Immaculate Conception of the Virgin Mary", "date": "2012-12-08", "observed": "2012-12-08", "public": false },
+      { "name": "Hanukkah",                                 "date": "2012-12-09", "observed": "2012-12-09", "public": false },
+      { "name": "Hanukkah",                                 "date": "2012-12-10", "observed": "2012-12-10", "public": false },
+      { "name": "Hanukkah",                                 "date": "2012-12-11", "observed": "2012-12-11", "public": false },
+      { "name": "Hanukkah",                                 "date": "2012-12-12", "observed": "2012-12-12", "public": false },
+      { "name": "Hanukkah",                                 "date": "2012-12-13", "observed": "2012-12-13", "public": false },
+      { "name": "Hanukkah",                                 "date": "2012-12-14", "observed": "2012-12-14", "public": false },
+      { "name": "Hanukkah",                                 "date": "2012-12-15", "observed": "2012-12-15", "public": false },
+      { "name": "Christmas Eve",                            "date": "2012-12-24", "observed": "2012-12-24", "public": false },
+      { "name": "Christmas Day",                            "date": "2012-12-25", "observed": "2012-12-25", "public": true },
+      { "name": "First Day of Kwanzaa",                     "date": "2012-12-26", "observed": "2012-12-26", "public": false },
+      { "name": "Second Day of Kwanzaa",                    "date": "2012-12-27", "observed": "2012-12-27", "public": false },
+      { "name": "Third Day of Kwanzaa",                     "date": "2012-12-28", "observed": "2012-12-28", "public": false },
+      { "name": "Fourth Day of Kwanzaa",                    "date": "2012-12-29", "observed": "2012-12-29", "public": false },
+      { "name": "Fifth Day of Kwanzaa",                     "date": "2012-12-30", "observed": "2012-12-30", "public": false },
+      { "name": "New Year's Eve",                           "date": "2012-12-31", "observed": "2012-12-31", "public": true },
+      { "name": "Sixth Day of Kwanzaa",                     "date": "2012-12-31", "observed": "2012-12-31", "public": false }
+    ]
+  }
+]

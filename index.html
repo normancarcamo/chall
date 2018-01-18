@@ -2,7 +2,6 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Hello World</title>
     <link rel="stylesheet" href="index.css">
     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
@@ -29,15 +28,11 @@
         }
 
         onClick(e) {
-          if (this.props.onSearch) {
-            this.props.onSearch(this.state)
-          } else {
-            console.log('Click!');
-          }
+          this.props.onSearch(this.state)
         }
 
         onChange({ target }) {
-          this.setState({ [target.name]: target.value });
+          this.setState({ [target.name]: target.name === 'days' ? Number(target.value) : target.value });
         }
 
         render() {
@@ -67,6 +62,77 @@
         }
       }
 
+      class Calendar extends Component {
+        constructor(props) {
+          super(props);
+        }
+
+        buildHeader(weekdays, monthName) {
+          return (
+            <thead>
+              <tr>
+                {weekdays.map((day, index) =>
+                  <th className={'daysAbbr'} key={index}>{day.abbr}</th>
+                )}
+              </tr>
+              <tr>
+                <th className={'month-name'} colSpan={weekdays.length}>
+                  {monthName}
+                </th>
+              </tr>
+            </thead>
+          );
+        }
+
+        buildBody(weeks) {
+          return (
+            <tbody>
+              {weeks.map((week, i) =>
+                <tr key={i}>
+                  {week.map((day, i) => {
+                    if (day) {
+                      if (day.marked) {
+                        if (day.weekend) {
+                          return <td className={day.holiday ? 'holiday' : 'weekend'} key={i}>{day.key}</td>
+                        } else {
+                          return <td className={day.holiday ? 'holiday' : 'weekday'} key={i}>{day.key}</td>
+                        }
+                      } else {
+                        return <td className={'daysOff'} key={i}>{''}</td>
+                      }
+                    } else {
+                      return <td className={'daysOff'} key={i}>{''}</td>
+                    }
+                  })}
+                </tr>
+              )}
+            </tbody>
+          );
+        }
+
+        render() {
+          return (
+            <div className={'calendar'}>
+              {Object.keys(this.props.years).map((year, indexYear) =>
+                <div className={'yearWrapper'} key={indexYear}>
+                  <h2 className={'yearTitle'}>Year: {year}</h2>
+                  <div className={'year'}>
+                    {this.props.years[year].map((month, indexMonth) => month.marked &&
+                      <div className={'month'} key={indexMonth}>
+                        <table>
+                          {this.buildHeader(month.weekdays, month.name)}
+                          {this.buildBody(month.weeks)}
+                        </table>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        }
+      }
+
       class App extends Component {
         constructor(props) {
           // Initial props:
@@ -74,17 +140,18 @@
 
           // Initial state:
           this.state = {
-            filters: null,
             api: {
               url: `https://holidayapi.com/v1/holidays`,
               query: {
                 key: `927457cd-2748-43a6-9991-a3c0925d3092`,
                 country: `US`,
                 year: `2008`,
-                month: `9`
-              }
+                month: `9`,
+              },
             },
-            calendar: null
+            error: null,
+            calendar: null,
+            filters: null,
           };
 
           // Event handlers:
@@ -96,6 +163,24 @@
 
           state.filters = Object.assign({}, values);
 
+          if (!state.filters.startdate) {
+            state.error = 'Startdate is a required input';
+            this.setState(state);
+            return;
+          }
+          if (!state.filters.countrycode) {
+            state.error = 'Country code is a required input';
+            this.setState(state);
+            return;
+          }
+          if (!state.filters.days) {
+            state.error = 'Quantity of days is a required input';
+            this.setState(state);
+            return;
+          }
+
+          state.error = null;
+
           if (/\-0/g.test(state.filters.startdate)) { // -0n
             let date = state.filters.startdate.replace(/\-0/g, '-'); // 2017-01-01 -> 2017-1-1
             state.filters.startdate = new Date(date);
@@ -104,20 +189,61 @@
             state.api.query.month   = state.filters.startdate.getMonth() + 1;
           }
 
-          try {
-            const { body } = await superagent(state.api.url).query(state.api.query);
-            state.calendar = new Calendario(state.api.query.year);
+          let counterForMonths = 0;
+          let counterForYears  = 0;
 
-            console.log('getMonthsFrom a year ---->', state.calendar.getMonthsFrom(state.api.query.year));
+          async function getHolidays(url, query, calendar, startdate, days) {
+            try {
+              let { body } = await superagent(url).query(query);
 
-            if (body.holidays.length) {
-              console.log(`The month has: ${body.holidays.length} holidays`);
+              let years_ = null;
+
+              if (body.holidays.length) {
+                years_ = calendar.setHolidays(query.month-1, body.holidays);
+              }
+
+              if (days) {
+                years_ = calendar.markDays(startdate, days);
+                let resume = calendar.getResumeOfSelection();
+
+                if (counterForMonths < resume[query.year].length) {
+                  counterForMonths++;
+                  query.month = resume[query.year][counterForMonths]+1;
+                  if (query.month) {
+                    let { years } = await getHolidays(url, query, calendar, startdate, days);
+                    years_ = years;
+                  } else {
+                    counterForYears++;
+                    let nextYear = Number(Object.keys(resume)[counterForYears]);
+                    if (nextYear > query.year) {
+                      query.year = nextYear;
+                      query.month = 1;
+                      calendar.year = nextYear;
+                      counterForMonths = 0;
+                      let { years } = await getHolidays(url, query, calendar, startdate, days);
+                      years_ = years;
+                    }
+                  }
+                } else {
+                  counterForMonths = 0;
+                }
+              }
+
+              return { years: years_ };
+            } catch (error) {
+              return { error }
             }
-          } catch ({ message }) {
-            console.log('ERROR HERE! ->', message);
           }
 
-          console.log('State:', state);
+          state.calendar = new Calendario(state.api.query.year);
+
+          let { error, years } = await getHolidays(state.api.url, state.api.query, state.calendar, values.startdate, state.filters.days);
+
+          if (error) {
+            state.error = error.message;
+          } else {
+            state.calendar.years = years;
+          }
 
           this.setState(state);
         }
@@ -125,8 +251,9 @@
         render() {
           return (
             <div className={'wrapper'}>
-              <h1>Hello from react</h1>
               <Inputs onSearch={this.onSearch} />
+              {this.state.error && <pre className={'error'}>{this.state.error}</pre>}
+              {(this.state.calendar && !this.state.error) && <Calendar years={this.state.calendar.years} />}
             </div>
           );
         }
